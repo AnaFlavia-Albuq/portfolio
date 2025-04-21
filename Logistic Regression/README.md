@@ -18,7 +18,7 @@ Para este trabalho foi utilizada uma base de dados fictícia contendo dados de f
 O dataset contém 1.470 observações e 34 colunas, das quais 17 quantitativas e 17 colunas são qualitativas.
 
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/entendimento_dados.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/entendimento_dados.png">
 </p>
 
 Acesse o [Kaggle](https://www.kaggle.com/code/shwetapandey01/employee-attrition-eda-prediction-9-model) para fazer download do dataset e verificar mais informações.
@@ -33,7 +33,7 @@ No gráfico abaixo é possível perceber o desbalanceamento entre os dados.
 Para este estudo, não foi adotada nenhuma técnica de reamostragem para o dataset.
 
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/Desbalanceamento_turnover.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/Desbalanceamento_turnover.png">
 </p>
 
 
@@ -46,7 +46,7 @@ Analisando os valores média, mínimo e máximo da coluna StandardHours, nota-se
 As colunas EmployeeCount e StandardHours, foram excluídas do conjunto de dados.
 
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/colunas_numericas_turnover.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/colunas_numericas_turnover.png">
 </p>
 
 
@@ -58,7 +58,7 @@ Todas as colunas contém mais de uma categoria, com exceção da coluna Over18 q
 Como o dataset já contém a coluna Age (idade dos empregados), a coluna Over18 também foi excluída do dataset, restando 30 colunas explicativas para análise do estudo.
 
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/colunas_categoricas_turnover.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/colunas_categoricas_turnover.png">
 </p>
 
 
@@ -77,7 +77,7 @@ Foi gerada uma matriz de correlação das variáveis categóricas. Pode-se notar
 Essas variáveis foram mantidas no dataset, pois na construção do modelo foi executado um procedimento chamado Stepwise da biblioteca statsmodel, que será explicado melhor no próximo tópico.
 
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/matriz_correlacao.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_correlacao.png">
 </p>
 
 
@@ -95,12 +95,12 @@ Para a construção dos modelo foi utilizado:
 Para aplicação da regressão logística, o dataset foi separado entre treino e teste, usando o percentual 80% e 20%, respectivamente.
 - Treino:
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/proporcao_treino.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/proporcao_treino.png">
 </p>
 
 - Teste:
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/proporcao_teste.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/proporcao_teste.png">
 </p>
 
 Foi executado o modelo logito na base de treino, considerou-se o nível de significância de 5% e foi usada a função logit da biblioteca statsmodels.api.
@@ -126,7 +126,7 @@ Covariance Type:	nonrobust	LLR p-value:	1.207e-57
 Para identificar quais variáveis foram de fato estatisticamente relevantes e que deveriam permanecer no modelo, foi executada a função stepwise da biblioteca statsmodels.process. Esta técnica mantém apenas os parâmetros estatisticamente significantes. Conforme a figura abaixo, pode-se observar que após o procedimento stepwise, 23 variáveis permaneceram no modelo, todas com o valor do p-value menor que o nível de significância de 5%.
 
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/feature_importance.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/feature_importance.png">
 </p>
 
 
@@ -141,12 +141,12 @@ Ao analisar a curva de sensitividade em relação a especificidade, é possível
 
 - Treino
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/curva_sensibilidade_treino.png" width="600" height="500">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/curva_sensibilidade_treino.png" width="600" height="500">
 </p>
 
 - Teste
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/curva_sensibilidade_teste.png" width="600" height="500">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/curva_sensibilidade_teste.png" width="600" height="500">
 </p>
 
 
@@ -156,24 +156,24 @@ A matriz de confusão é uma tabela com duas linhas e duas colunas que relata o 
 
 - Treino
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/matriz_confusao_treino_cutoff05.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_treino_cutoff05.png">
 </p>
 
 - Teste
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/matriz_confusao_treino_cutoff03.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_treino_cutoff03.png">
 </p>
 
 Ao considerar um cutoff de 30%, nota-se uma melhora da taxa de acerto dos que foram evento. A matriz de confusão mostrou que o modelo de treino atingiu 90,97% de especificidade e 68,42% de sensitividade, com uma acurácia de 87,33%. A matriz de confusão após treinado o modelo no dataset de teste mostrou que o modelo atingiu 84,69% de acurácia, 89,88% de especificidade e 57,45% de sensitividade
 
 - Treino
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/matriz_confusao_teste_cutoff05.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_teste_cutoff05.png">
 </p>
 
 - Teste
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/matriz_confusao_teste_cutoff03.png">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_teste_cutoff03.png">
 </p>
 
 
@@ -185,12 +185,12 @@ Para o modelo de treino pode-se observar uma área abaixo da curva de 88,36%, en
 
 - Treino
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/curva_roc_treino.png" width="600" height="500">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regressiona/Imagens/curva_roc_treino.png" width="600" height="500">
 </p>
 
 - Teste
 <p align="center">
-  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Regress%C3%A3o%20Log%C3%ADstica/Imagens/curva_roc_teste.png" width="600" height="500">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/curva_roc_teste.png" width="600" height="500">
 </p>
 
 
