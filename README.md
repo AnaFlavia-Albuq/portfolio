@@ -3,9 +3,5 @@
 </p>
 
 
-Aqui você irá encontrar alguns projetos pessoais, resultado de estudos da área de análise e ciência de dados, usando tecnologias como Power BI, AWS e Databricks, linguagem python e modelos de machine learning.
+Here you will find some personal projects, the result of studies in the area of ​​data analysis and science, using technologies such as Power BI, AWS and Databricks, Python language and machine learning models.
 
-
-## Bases de Dados
-
-Todos os conjuntos de dados utilizados são dados públicos e/ou fictícios, coletados em sites como o Kaggle.
