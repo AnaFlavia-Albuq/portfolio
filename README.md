@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://neilpatel.com/wp-content/uploads/2017/12/portfolio.jpg" width="100%" height="500">
+  <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Imagens/portfolio.png" width="100%" height="500">
 </p>
 
 
