@@ -1,113 +1,112 @@
-# Predição de Turnover
+# Turnover Prediction
 
 
-Neste projeto foi abordado sobre um dos principais indicadores da Área de Recursos Humanos, Turnover.
+This project addressed one of the main indicators in the Human Resources Area: Turnover.
 
-O turnover é o número de funcionários desligados da empresa em determinado período comparado à quantidade de funcionários efetivos, o que gera o Índice de Rotatividade.
+Turnover is the number of employees who leave the company in a given period compared to the number of permanent employees, which generates the Turnover Rate.
 
-O turnover tem um grande impacto na produtividade e eficiência da organização quando ocorre de forma voluntária (quando o funcionário solicita desligamento), além de afetar o desempenho de outros funcionários.
+Turnover has a major impact on the productivity and efficiency of the organization when it occurs voluntarily (when the employee requests termination), in addition to affecting the performance of other employees.
 
-O objetivo deste estudo é a utilização da técnica estatística de regressão logística binária, para prever quem pode solicitar desligamento. 
+The objective of this study is to use the statistical technique of binary logistic regression to predict who may request termination.
 
 
 
-## Base de Dados
+## Database
 
-Para este trabalho foi utilizada uma base de dados fictícia contendo dados de funcionários fictícios. Os dados foram coletados do Kaggle, do dataset chamado “IBM HR Analytics Employee Attrition & Performance”. Este conjunto de dados oferece uma visão abrangente das informações relacionadas aos funcionários de uma organização fictícia criada por cientistas de dados da IBM.
+For this work, we used a fictitious database containing data from fictitious employees. The data was collected from Kaggle, from the dataset called “IBM HR Analytics Employee Attrition & Performance”. This dataset provides a comprehensive view of information related to employees of a fictitious organization created by IBM data scientists.
 
-O dataset contém 1.470 observações e 34 colunas, das quais 17 quantitativas e 17 colunas são qualitativas.
+The dataset contains 1,470 observations and 34 columns, of which 17 are quantitative and 17 are qualitative.
 
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/entendimento_dados.png">
 </p>
 
-Acesse o [Kaggle](https://www.kaggle.com/code/shwetapandey01/employee-attrition-eda-prediction-9-model) para fazer download do dataset e verificar mais informações.
+Visit [Kaggle](https://www.kaggle.com/code/shwetapandey01/employee-attrition-eda-prediction-9-model) to download the dataset and check more information.
 
 
-## Análise e Preparação dos Dados
+## Data Analysis and Preparation
 
-A coluna Attrition é a variável dependente do modelo e foi analisada para verificar o balanceamento dos dados. Para os valores de Attrition iguais a 1, ou seja, pessoas que solicitaram desligamento (que é o evento de interesse em estudo) está presente em apenas 16,12% das observações, enquanto o valor 0, ou pessoas que não solicitaram desligamento, está presente no restante das observações, 83,88%.
+The Attrition column is the dependent variable of the model and was analyzed to verify the balance of the data. For Attrition values ​​equal to 1, that is, people who requested termination (which is the event of interest in the study) it is present in only 16.12% of the observations, while the value 0, or people who did not request termination, is present in the remaining observations, 83.88%.
 
-No gráfico abaixo é possível perceber o desbalanceamento entre os dados.
+The imbalance between the data can be seen in the graph below.
 
-Para este estudo, não foi adotada nenhuma técnica de reamostragem para o dataset.
+For this study, no resampling technique was adopted for the dataset.
 
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/Desbalanceamento_turnover.png">
 </p>
 
 
-**Colunas numéricas**
+**Numeric columns**
 
-Foi realizada uma análise descritiva das colunas numéricas.
-A coluna EmployeeCount contém um único valor “1” para todas as observações na base de dados e é utilizada apenas para contabilizar as observações.
-Analisando os valores média, mínimo e máximo da coluna StandardHours, nota-se que esta coluna possui um único valor (80) para todas as observações.
+A descriptive analysis of the numerical columns was performed.
+The EmployeeCount column contains a single value “1” for all observations in the database and is used only to count the observations.
+Analyzing the average, minimum and maximum values ​​of the StandardHours column, it is noted that this column has a single value (80) for all observations.
 
-As colunas EmployeeCount e StandardHours, foram excluídas do conjunto de dados.
+The EmployeeCount and StandardHours columns were excluded from the dataset.
 
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/colunas_numericas_turnover.png">
 </p>
 
 
-**Colunas categóricas**
+**Categorical columns**
 
-Para as colunas qualitativas, foi analisado o conteúdo de cada coluna no dataset.
-Todas as colunas contém mais de uma categoria, com exceção da coluna Over18 que contém apenas o valor ”Y” presente em 100% das linhas do dataset, indicando que todas as observações são maiores que 18 anos.
+For the qualitative columns, the content of each column in the dataset was analyzed.
+All columns contain more than one category, with the exception of the Over18 column, which contains only the value “Y”, present in 100% of the dataset rows, indicating that all observations are over 18 years old.
 
-Como o dataset já contém a coluna Age (idade dos empregados), a coluna Over18 também foi excluída do dataset, restando 30 colunas explicativas para análise do estudo.
+Since the dataset already contains the Age column (age of employees), the Over18 column was also excluded from the dataset, leaving 30 explanatory columns for analysis in the study.
 
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/colunas_categoricas_turnover.png">
 </p>
 
 
-**Preparação Final**
+**Final Preparation**
 
-As variáveis qualitativas categóricas foram transformadas para variáveis dummy, aumentando a quantidade de colunas explicativas para aplicação da regressão logística para 61 variáveis, sendo uma variável dependente dicotômica do evento em estudo.
+The categorical qualitative variables were transformed into dummy variables, increasing the number of explanatory columns for applying logistic regression to 61 variables, with a dichotomous dependent variable for the event under study.
 
+**Correlation Matrix**
 
-**Matriz de Correlação**
-
-Foi gerada uma matriz de correlação das variáveis categóricas. Pode-se notar que existem variáveis com maiores correlações:
+A correlation matrix of the categorical variables was generated. It can be seen that there are variables with higher correlations:
 - MonthlyIncome and TotalWorkingYears
 - YearsAtCompany and YearsInCurrentRole
 - YearsAtCompany and YearsWithCurrManager
 
-Essas variáveis foram mantidas no dataset, pois na construção do modelo foi executado um procedimento chamado Stepwise da biblioteca statsmodel, que será explicado melhor no próximo tópico.
+These variables were kept in the dataset, since a procedure called Stepwise from the statsmodel library was executed in the construction of the model, which will be explained in more detail in the next topic.
 
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_correlacao.png">
 </p>
 
 
-## Construção do Modelo
+## Model Construction
 
-Neste projeto foi trabalhado um modelo do tipo supervisionado que são modelos estatísticos usados quando queremos explicar ou prever dados, isso é feito com a ajuda de dados históricos que serão destinados ao treino do modelo e assim ele será capaz de prever dados de saída para novas entradas.
+This project involved working on a supervised model, which are statistical models used when we want to explain or predict data. This is done with the help of historical data that will be used to train the model, so that it will be able to predict output data for new inputs.
 
-Para a construção dos modelo foi utilizado:
+The following were used to build the model:
 
-* **Logistic Regression:** A técnica de regressão logística binária é utilizada quando o fenômeno a ser estudado apresenta-se de forma qualitativa dicotômica (dois valores possíveis), representado por uma variável dummy, com o intuito de estimar a probabilidade de ocorrência do evento de interesse, considerando a chance [odds] de ocorrência do evento. A partir do logito define-se a expressão da probabilidade de ocorrência do evento em estudo, em função das variáveis explicativas. O logito é o logaritmo natural da chance de ocorrência de uma resposta do tipo “sim”.
-
+* **Logistic Regression:** The binary logistic regression technique is used when the phenomenon to be studied presents itself in a qualitative dichotomous form (two possible values), represented by a dummy variable, with the aim of estimating the probability of the event of interest occurring, considering the chance [odds] of the event occurring. The logit is used to define the expression of the probability of the event under study occurring, based on the explanatory variables. The logit is the natural logarithm of the chance of a “yes” response occurring.
 
 **Logistic Regression**
 
-Para aplicação da regressão logística, o dataset foi separado entre treino e teste, usando o percentual 80% e 20%, respectivamente.
-- Treino:
+To apply logistic regression, the dataset was separated into training and testing, using the percentages 80% and 20%, respectively.
+
+- Train:
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/proporcao_treino.png">
 </p>
 
-- Teste:
+- Test:
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/proporcao_teste.png">
 </p>
 
-Foi executado o modelo logito na base de treino, considerou-se o nível de significância de 5% e foi usada a função logit da biblioteca statsmodels.api.
+The logit model was run on the training base, considering a significance level of 5% and using the logit function from the statsmodels.api library.
 
-Após executar o modelo, obteve-se o resultado do LLR p-value no valor de 1.207e-57 (em notação científica), ou seja, menor que 5% de nível de significância, que indicou que ao menos uma variável independente se mostrou estatisticamente relevante, ou beta [β] diferente de 0. Esse resultado mostrou que o modelo de regressão logística é adequado para seguir com a análise.
+After running the model, the LLR p-value result was 1.207e-57 (in scientific notation), i.e., less than a 5% significance level, which indicated that at least one independent variable was statistically relevant, or beta [β] different from 0. This result showed that the logistic regression model is suitable for continuing with the analysis.
 
-O p-value do teste Chi-Square [χ2] propicia uma verificação inicial da significância do modelo. O teste χ2 é calculado da seguinte forma: -2*(likelihood do modelo nulo – likelihood máximo). Com o resultado dessa função calcula-se o p-value do χ2, resultando no valor do log likelihood ratio test [LLR p-value] que verifica a adequação do ajuste do modelo completo em comparação com o ajuste do modelo final. Para que o teste de significância do modelo rejeite a hipótese nula (onde todos os betas são iguais a zero) ao nível de confiança de 95%, o LLR p-value deve ser menor que 5% de nível de significância para dar continuidade ao modelo de regressão logística.
+The p-value of the Chi-Square [χ2] test provides an initial verification of the significance of the model. The χ2 test is calculated as follows: -2*(likelihood of the null model – maximum likelihood). The result of this function is used to calculate the p-value of χ2, resulting in the value of the log likelihood ratio test [LLR p-value] that verifies the adequacy of the adjustment of the complete model in comparison with the adjustment of the final model. In order for the significance test of the model to reject the null hypothesis (where all betas are equal to zero) at the 95% confidence level, the LLR p-value must be less than the 5% significance level to continue with the logistic regression model.
 
 ```shell
           Logit Regression Results
@@ -123,21 +122,21 @@ Covariance Type:	nonrobust	LLR p-value:	1.207e-57
 
 **Feature Importances**
 
-Para identificar quais variáveis foram de fato estatisticamente relevantes e que deveriam permanecer no modelo, foi executada a função stepwise da biblioteca statsmodels.process. Esta técnica mantém apenas os parâmetros estatisticamente significantes. Conforme a figura abaixo, pode-se observar que após o procedimento stepwise, 23 variáveis permaneceram no modelo, todas com o valor do p-value menor que o nível de significância de 5%.
+To identify which variables were in fact statistically relevant and should remain in the model, the stepwise function from the statsmodels.process library was executed. This technique keeps only the statistically significant parameters. As shown in the figure below, it can be seen that after the stepwise procedure, 23 variables remained in the model, all with a p-value lower than the 5% significance level.
 
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/feature_importance.png">
 </p>
 
 
-## Interpretando indicadores de performance do modelo
+## Interpreting model performance indicators
 
-A curva de sensibilidade é um gráfico que apresenta os valores da sensitividade e da especificidade em função dos diversos valores de cutoff. Por meio da curva de sensitividade e especificidade, é possível analisar e definir o melhor cutoff para o objetivo da análise.
-O cutoff é um ponto de corte que o pesquisador escolhe o que melhor atende aos objetivos do modelo. Para definir o cutoff é necessária uma análise dos parâmetros para verificar o que melhor se encaixa para atender as necessidades do estudo. Não necessariamente, somente a acurácia deve ser levada em consideração, pois existem outros parâmetros como a sensitividade, que é a taxa de acerto do evento, e a especificidade, que é taxa de acerto do não evento. É possível escolher um cutoff que melhore mais a sensitividade, ou um cutoff que traga um melhor resultado para a especificidade.
+The sensitivity curve is a graph that shows the sensitivity and specificity values ​​as a function of the various cutoff values. Using the sensitivity and specificity curve, it is possible to analyze and define the best cutoff for the purpose of the analysis.
+The cutoff is a cutoff point that the researcher chooses that best meets the objectives of the model. To define the cutoff, an analysis of the parameters is necessary to verify what best fits the needs of the study. Not necessarily, only accuracy should be taken into consideration, as there are other parameters such as sensitivity, which is the event hit rate, and specificity, which is the non-event hit rate. It is possible to choose a cutoff that improves sensitivity the most, or a cutoff that yields a better result for specificity.
 
-**Curva de Sensibilidade**
+**Sensitivity Curve**
 
-Ao analisar a curva de sensitividade em relação a especificidade, é possível observar que a especificidade aumenta à medida que eleva o cutoff, ou seja, quanto maior o cutoff, maior é a taxa de acerto do não evento.  Este comportamento pode ter ocorrido devido ao desbalanceamento dos dados, levando o modelo a ter uma maior taxa de acerto para pessoas que não solicitaram desligamento, pois fazem parte da classe majoritária do dataset. Já um cutoff mais baixo, por exemplo 30%, pode-se observar que a curva de sensitividade mostra uma elevação, indicando que o modelo pode ter uma taxa melhor de acerto para os que são de fato o evento de interesse em estudo. Ao observar o ponto do cutoff de 20%, as curvas de sensitividade e especificidade se cruzam, indicando que ambas apresentam uma taxa de acerto bem próximas, entre 75% e 80%.
+When analyzing the sensitivity curve in relation to specificity, it is possible to observe that specificity increases as the cutoff increases, that is, the higher the cutoff, the higher the accuracy rate for the non-event. This behavior may have occurred due to data imbalance, leading the model to have a higher accuracy rate for people who did not request termination, as they are part of the majority class in the dataset. However, with a lower cutoff, for example 30%, it can be observed that the sensitivity curve shows an increase, indicating that the model may have a better accuracy rate for those who are in fact the event of interest under study. When observing the 20% cutoff point, the sensitivity and specificity curves intersect, indicating that both have a very close accuracy rate, between 75% and 80%.
 
 - Treino
 <p align="center">
@@ -150,60 +149,61 @@ Ao analisar a curva de sensitividade em relação a especificidade, é possível
 </p>
 
 
-**Matriz de confusão**
+**Confusion Matrix**
 
-A matriz de confusão é uma tabela com duas linhas e duas colunas que relata o número de falsos positivos, falsos negativos, verdadeiros positivos e verdadeiros negativos. Com base nesses resultados, calcula-se a sensitividade e a especificidade. Considerando um cutoff de 50% de acerto, a matriz de confusão do dataset de treino mostrou que o modelo atingiu 90% de acurácia, 97,26% de especificidade e 52,63% de sensitividade, enquanto a matriz de confusão após treinado o modelo no dataset de teste mostrou que o modelo atingiu 86,39% de acurácia, 95,55% de especificidade e 38,3% de sensitividade.
+The confusion matrix is ​​a table with two rows and two columns that reports the number of false positives, false negatives, true positives, and true negatives. Based on these results, sensitivity and specificity are calculated. Considering a cutoff of 50% accuracy, the confusion matrix of the training dataset showed that the model achieved 90% accuracy, 97.26% specificity, and 52.63% sensitivity, while the confusion matrix after training the model on the test dataset showed that the model achieved 86.39% accuracy, 95.55% specificity, and 38.3% sensitivity.
 
-- Treino
+- Train
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_treino_cutoff05.png">
 </p>
 
-- Teste
+- Test
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_treino_cutoff03.png">
 </p>
 
-Ao considerar um cutoff de 30%, nota-se uma melhora da taxa de acerto dos que foram evento. A matriz de confusão mostrou que o modelo de treino atingiu 90,97% de especificidade e 68,42% de sensitividade, com uma acurácia de 87,33%. A matriz de confusão após treinado o modelo no dataset de teste mostrou que o modelo atingiu 84,69% de acurácia, 89,88% de especificidade e 57,45% de sensitividade
+When considering a cutoff of 30%, an improvement in the accuracy rate of those that were events is noted. The confusion matrix showed that the training model achieved 90.97% specificity and 68.42% sensitivity, with an accuracy of 87.33%. The confusion matrix after training the model on the test dataset showed that the model achieved 84.69% accuracy, 89.88% specificity and 57.45% sensitivity.
 
-- Treino
+- Train
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_teste_cutoff05.png">
 </p>
 
-- Teste
+- Test
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/matriz_confusao_teste_cutoff03.png">
 </p>
 
 
-**Curva ROC**
+**ROC Curve**
 
-A Curva ROC, ou Receiver Operating Characteristic, é uma representação gráfica que mostra o desempenho do modelo de regressão logística binária. Quanto maior a área abaixo da curva, significa que melhor é a eficiência de previsão do modelo. A curva ROC não depende do valor do cutoff, na verdade a área abaixo da curva aumenta de acordo com as variáveis preditoras estatisticamente relevantes que permanecem após o procedimento de stepwise.
+The ROC Curve, or Receiver Operating Characteristic, is a graphical representation that shows the performance of the binary logistic regression model. The larger the area under the curve, the better the model's predictive efficiency. The ROC curve does not depend on the cutoff value; in fact, the area under the curve increases according to the statistically relevant predictor variables that remain after the stepwise procedure.
 
-Para o modelo de treino pode-se observar uma área abaixo da curva de 88,36%, enquanto o modelo de teste apresentou 81,17% de área abaixo da curva, mostrando que ambos os modelos tiveram uma ótima capacidade preditora, considerando as 18 variáveis que permaneceram após o procedimento stepwise.
+For the training model, an area under the curve of 88.36% can be observed, while the test model presented an area under the curve of 81.17%, showing that both models had excellent predictive capacity, considering the 18 variables that remained after the stepwise procedure.
 
-- Treino
+- Train
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/curva_roc_treino.png" width="600" height="500">
 </p>
 
-- Teste
+- Test
 <p align="center">
   <img src="https://github.com/AnaFlavia-Albuq/portfolio/blob/main/Logistic%20Regression/Imagens/curva_roc_teste.png" width="600" height="500">
 </p>
 
 
-## Considerações Finais
+## Considerations
 
-O modelo de regressão logística aplicado no estudo, se mostrou adequado para prever funcionários que podem solicitar desligamento, considerando dados históricos. Inicialmente o modelo foi gerado com 60 variáveis explicativas independentes. Foi realizada a análise do parâmetro LLR p-value que apresentou um valor abaixo de 0,05 de nível de significância, para análise de significância do modelo. Esse resultado mostrou que o modelo de regressão logística seria adequado para o estudo, sendo assim, foi dado continuidade com a execução do modelo realizando o procedimento stepwise. O modelo final permaneceu com 23 variáveis estatisticamente relevantes, com o p-value menor que 0,05 de nível de significância para explicar o evento de interesse.
+The logistic regression model applied in the study proved to be adequate for predicting employees who may request dismissal, considering historical data. Initially, the model was generated with 60 independent explanatory variables. The LLR p-value parameter was analyzed, which presented a value below 0.05 significance level, for analysis of the significance of the model. This result showed that the logistic regression model would be adequate for the study, therefore, the model was continued with the stepwise procedure. The final model remained with 23 statistically relevant variables, with a p-value below 0.05 significance level to explain the event of interest.
 
-Ao analisar o exponencial dos coeficientes das variáveis preditoras, foi possível observar algumas características que podem influenciar na decisão de funcionários solicitarem desligamento, como tais fatores: pessoas mais jovens, pessoas com salários menores, pessoas que moram mais distante do trabalho, pessoas que viajam frequentemente ou raramente a trabalho, pessoas insatisfeitas com o ambiente de trabalho. Também foi possível observar que pessoas que desempenham o cargo Sales Executive apresentaram mais chance de solicitar desligamento, indicando um possível problema no ambiente de trabalho, dentre outras análises que foi possível extrair do resultado final do modelo.
-Mesmo com os dados desbalanceados e com uma classe majoritária no dataset sendo pessoas que não solicitaram desligamento, ao considerar um cutoff de 50% o modelo foi capaz de acertar os que foram evento, resultando em uma sensitividade de 52,26% e 38,3% no treino e teste do modelo, respectivamente. Ao considerar um cutoff que melhora a sensitividade, o modelo foi capaz de acertar 68,42%  e 57,45%, no treino e teste respectivamente.
+By analyzing the exponential of the coefficients of the predictor variables, it was possible to observe some characteristics that may influence the decision of employees to request termination, such as: younger people, people with lower salaries, people who live further away from work, people who travel frequently or rarely for work, people dissatisfied with the work environment. It was also possible to observe that people who hold the Sales Executive position were more likely to request termination, indicating a possible problem in the work environment, among other analyses that were possible to extract from the final result of the model.
 
-A curva ROC apresentou uma excelente área abaixo da curva, resultando nos valores 88,36% e  81,17% no treino e teste respectivamente, mostrando que o modelo teve uma ótima capacidade preditora global.
+Even with the unbalanced data and with a majority class in the dataset being people who did not request termination, when considering a cutoff of 50% the model was able to correctly identify those that were events, resulting in a sensitivity of 52.26% and 38.3% in the training and testing of the model, respectively. When considering a cutoff that improves sensitivity, the model was able to correctly identify 68.42% and 57.45%, in the training and testing respectively.
 
-Com estas análises, foi possível concluir que o uso da técnica estatística de regressão logística binária em um conjunto de dados históricos relevantes com uma ampla gama de variáveis explicativas, como características e informações contratuais dos funcionários, sua implementação se mostrou estatisticamente relevante para previsão do turnover. Sendo assim, a área de Recursos Humanos pode gerar ações para a retenção de talentos, usando análises baseadas em dados mensuráveis.
+The ROC curve showed an excellent area under the curve, resulting in values ​​of 88.36% and 81.17% in training and testing, respectively, showing that the model had excellent overall predictive capacity.
+
+With these analyses, it was possible to conclude that the use of the binary logistic regression statistical technique in a set of relevant historical data with a wide range of explanatory variables, such as employee characteristics and contractual information, proved to be statistically relevant for predicting turnover. Therefore, the Human Resources area can generate actions for talent retention, using analyses based on measurable data.
 
 
 
