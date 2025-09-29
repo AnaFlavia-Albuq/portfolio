@@ -1,0 +1,12 @@
+pandas==2.2.3
+numpy==2.1.1
+requests==2.32.3
+transformers==4.44.2
+torch==2.4.1
+docling==0.4.3
+python-dotenv==1.0.1
+huggingface_hub==0.25.2
+langchain==0.3.7
+langchain-core==0.3.15
+langchain-text-splitters==0.3.2
+openai==1.51.2
